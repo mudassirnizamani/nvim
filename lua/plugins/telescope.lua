@@ -16,10 +16,25 @@ return {
 			{ "nvim-telescope/telescope-ui-select.nvim" },
 
 			-- Useful for getting pretty icons, but requires a Nerd Font.
-			{ "nvim-tree/nvim-web-devicons", enabled = vim.g.have_nerd_font },
+			{ "nvim-tree/nvim-web-devicons",            enabled = vim.g.have_nerd_font },
 		},
 		config = function()
+			local actions = require("telescope.actions")
+
 			require("telescope").setup({
+				defaults = {
+					sorting_strategy = "ascending",
+					layout_strategy = "horizontal",
+					layout_config = { prompt_position = "top" },
+					mappings = {
+						i = {
+							["<C-k>"] = actions.move_selection_previous, -- move to prev result
+							["<C-j>"] = actions.move_selection_next, -- move to next result
+							["<C-q>"] = actions.send_selected_to_qflist +
+									actions.open_qflist               -- send selected to quickfixlist
+						}
+					}
+				},
 				extensions = {
 					["ui-select"] = {
 						require("telescope.themes").get_dropdown(),
@@ -43,8 +58,9 @@ return {
 			vim.keymap.set("n", "<leader>sr", builtin.resume, { desc = "[S]earch [R]esume" })
 			vim.keymap.set("n", "<leader>s.", builtin.oldfiles, { desc = '[S]earch Recent Files ("." for repeat)' })
 			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
-			vim.keymap.set("n", "<leader>p", builtin.git_files, { desc = "Git Files" })
+			vim.keymap.set("n", "<leader>sp", builtin.git_files, { desc = "Git Files" })
 			vim.keymap.set("n", "<leader>st", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
+			vim.keymap.set("n", "<leader>sx", builtin.treesitter, { desc = "Treesitter symbols" }) -- Lists tree-sitter symbols
 
 			-- Slightly advanced example of overriding default behavior and theme
 			vim.keymap.set("n", "<leader>/", function()

@@ -4,7 +4,7 @@ return {
 	-- syntax highlighting.
 	{
 		"nvim-treesitter/nvim-treesitter",
-		version = false, -- last release is way too old and doesn't work on Windows
+		version = false,           -- last release is way too old and doesn't work on Windows
 		build = ":TSUpdate",
 		lazy = vim.fn.argc(-1) == 0, -- load treesitter early when opening a file from the cmdline
 		init = function(plugin)
@@ -19,7 +19,7 @@ return {
 		cmd = { "TSUpdateSync", "TSUpdate", "TSInstall" },
 		keys = {
 			{ "<c-space>", desc = "Increment Selection" },
-			{ "<bs>", desc = "Decrement Selection", mode = "x" },
+			{ "<bs>",      desc = "Decrement Selection", mode = "x" },
 		},
 		opts_extend = { "ensure_installed" },
 		---@type TSConfig
@@ -52,7 +52,8 @@ return {
 				"vimdoc",
 				"xml",
 				"yaml",
-				"go",
+				"csv", "dockerfile", "gitignore", "go", "gomod", "gosum",
+				"gowork",
 			},
 			incremental_selection = {
 				enable = true,
@@ -120,7 +121,10 @@ return {
 			end
 		end,
 	},
-
+	{
+		"nvim-treesitter/nvim-treesitter-context", -- Show code context
+		opts = { enable = true, mode = "topline", line_numbers = true }
+	},
 	-- Automatically add closing tags for HTML and JSX
 	{
 		"windwp/nvim-ts-autotag",
