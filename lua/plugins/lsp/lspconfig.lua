@@ -1,5 +1,10 @@
 return { -- LSP Configuration & Plugins
 	"neovim/nvim-lspconfig",
+  -- opts = {
+  --   servers = {
+  --     dartls = {},
+  --   },
+  -- },
 	dependencies = {
 		-- Automatically install LSPs and related tools to stdpath for Neovim
 		{ "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
@@ -177,5 +182,7 @@ return { -- LSP Configuration & Plugins
 				end,
 			},
 		})
+
+  require("flutter-tools").setup {} -- use defaults
 	end,
 }
