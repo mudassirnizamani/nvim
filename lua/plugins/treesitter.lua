@@ -121,10 +121,10 @@ return {
 			end
 		end,
 	},
-	{
-		"nvim-treesitter/nvim-treesitter-context", -- Show code context
-		opts = { enable = true, mode = "topline", line_numbers = true }
-	},
+	-- {
+	-- 	"nvim-treesitter/nvim-treesitter-context", -- Show code context
+	-- 	opts = { enable = true, mode = "topline", line_numbers = true }
+	-- },
 	-- Automatically add closing tags for HTML and JSX
 	{
 		"windwp/nvim-ts-autotag",

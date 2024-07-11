@@ -1,10 +1,10 @@
 return { -- LSP Configuration & Plugins
 	"neovim/nvim-lspconfig",
-  -- opts = {
-  --   servers = {
-  --     dartls = {},
-  --   },
-  -- },
+	-- opts = {
+	--   servers = {
+	--     dartls = {},
+	--   },
+	-- },
 	dependencies = {
 		-- Automatically install LSPs and related tools to stdpath for Neovim
 		{ "williamboman/mason.nvim", config = true }, -- NOTE: Must be loaded before dependants
@@ -13,11 +13,11 @@ return { -- LSP Configuration & Plugins
 
 		-- Useful status updates for LSP.
 		-- NOTE: `opts = {}` is the same as calling `require('fidget').setup({})`
-		{ "j-hui/fidget.nvim", opts = {} },
+		{ "j-hui/fidget.nvim",       opts = {} },
 
 		-- `neodev` configures Lua LSP for your Neovim config, runtime and plugins
 		-- used for completion, annotations and signatures of Neovim apis
-		{ "folke/neodev.nvim", opts = {} },
+		{ "folke/neodev.nvim",       opts = {} },
 	},
 	config = function()
 		--  This function gets run when an LSP attaches to a particular buffer.
@@ -47,10 +47,12 @@ return { -- LSP Configuration & Plugins
 				map("<leader>D", require("telescope.builtin").lsp_type_definitions, "Type [D]efinition")
 				-- Fuzzy find all the symbols in your current document.
 				--  Symbols are things like variables, functions, types, etc.
-				map("<leader>ds", require("telescope.builtin").lsp_document_symbols, "[D]ocument [S]ymbols")
+				map("<leader>ds", require("telescope.builtin").lsp_document_symbols,
+					"[D]ocument [S]ymbols")
 				-- Fuzzy find all the symbols in your current workspace.
 				--  Similar to document symbols, except searches over your entire project.
-				map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols, "[W]orkspace [S]ymbols")
+				map("<leader>ws", require("telescope.builtin").lsp_dynamic_workspace_symbols,
+					"[W]orkspace [S]ymbols")
 				-- Rename the variable under your cursor.
 				--  Most Language Servers support renaming across files, etc.
 				map("<leader>rn", vim.lsp.buf.rename, "[R]e[n]ame")
@@ -74,7 +76,8 @@ return { -- LSP Configuration & Plugins
 				-- When you move your cursor, the highlights will be cleared (the second autocommand).
 				local client = vim.lsp.get_client_by_id(event.data.client_id)
 				if client and client.server_capabilities.documentHighlightProvider then
-					local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
+					local highlight_augroup = vim.api.nvim_create_augroup("kickstart-lsp-highlight",
+						{ clear = false })
 					vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
 						buffer = event.buf,
 						group = highlight_augroup,
@@ -88,10 +91,15 @@ return { -- LSP Configuration & Plugins
 					})
 
 					vim.api.nvim_create_autocmd("LspDetach", {
-						group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
+						group = vim.api.nvim_create_augroup("kickstart-lsp-detach",
+							{ clear = true }),
 						callback = function(event2)
 							vim.lsp.buf.clear_references()
-							vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
+							vim.api.nvim_clear_autocmds({
+								group = "kickstart-lsp-highlight",
+								buffer =
+								    event2.buf
+							})
 						end,
 					})
 				end
@@ -177,12 +185,13 @@ return { -- LSP Configuration & Plugins
 					-- This handles overriding only values explicitly passed
 					-- by the server configuration above. Useful when disabling
 					-- certain features of an LSP (for example, turning off formatting for tsserver)
-					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities, server.capabilities or {})
+					server.capabilities = vim.tbl_deep_extend("force", {}, capabilities,
+						server.capabilities or {})
 					require("lspconfig")[server_name].setup(server)
 				end,
 			},
 		})
 
-  require("flutter-tools").setup {} -- use defaults
+		require("flutter-tools").setup {} -- use defaults
 	end,
 }
