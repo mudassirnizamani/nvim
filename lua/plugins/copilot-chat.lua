@@ -6,7 +6,6 @@ function M.pick(kind)
     local actions = require("CopilotChat.actions")
     local items = actions[kind .. "_actions"]()
     if not items then
-      LazyVim.warn("No " .. kind .. " found on the current line")
       return
     end
     local ok = pcall(require, "fzf-lua")
@@ -38,8 +37,8 @@ return {
       }
     end,
     keys = {
-      { "<c-s>", "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
-      { "<leader>a", "", desc = "+ai", mode = { "n", "v" } },
+      { "<c-s>",     "<CR>", ft = "copilot-chat", desc = "Submit Prompt", remap = true },
+      { "<leader>a", "",     desc = "+ai",        mode = { "n", "v" } },
       {
         "<leader>aa",
         function()
@@ -68,9 +67,9 @@ return {
         mode = { "n", "v" },
       },
       -- Show help actions with telescope
-      { "<leader>ad", M.pick("help"), desc = "Diagnostic Help (CopilotChat)", mode = { "n", "v" } },
+      { "<leader>ad", M.pick("help"),   desc = "Diagnostic Help (CopilotChat)", mode = { "n", "v" } },
       -- Show prompts actions with telescope
-      { "<leader>ap", M.pick("prompt"), desc = "Prompt Actions (CopilotChat)", mode = { "n", "v" } },
+      { "<leader>ap", M.pick("prompt"), desc = "Prompt Actions (CopilotChat)",  mode = { "n", "v" } },
     },
     config = function(_, opts)
       local chat = require("CopilotChat")
@@ -102,4 +101,3 @@ return {
     end,
   },
 }
-  
